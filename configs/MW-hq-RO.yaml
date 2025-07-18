@@ -1,0 +1,26 @@
+REFRESH_INTERVAL: 60
+
+SENSORS_ATTACHED:
+  - RO_outlet
+  - city_inlet
+
+SENSOR_ID_TO_INDEX:
+  RO_outlet: 1
+  city_inlet: 2
+
+SENSOR_COMPENSATIONS:
+  city_inlet:
+    slope: 0.338
+    offset: -2.04
+  RO_outlet:
+    slope: 0.338
+    offset: -2.04
+
+SERVO_ADJUSTMENTS:
+  USE_SERVO: true
+  SENSOR_ID_FOR_ANGLE_ADJUSTMENT: RO_outlet
+  TDS_TARGET: 34
+  SERVO_ID_FOR_ANGLE_ADJUSTMENT: RO_tap_mixing_valve
+
+FLOW_METER_ATTACHED_PIN:
+  ro_outlet_flow: 26

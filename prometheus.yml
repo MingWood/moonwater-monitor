@@ -1,0 +1,16 @@
+global:
+  scrape_interval: 15s  # Scrape targets every 15 seconds
+  evaluation_interval: 15s # Rule evaluation frequency
+  scrape_interval: 15s  # Scrape targets every 15 seconds
+  evaluation_interval: 15s # Rule evaluation frequency
+
+scrape_configs:
+  - job_name: "pourover-pi-monitor"
+    static_configs:
+      - targets: ["localhost:5123"]
+
+remote_write:
+  - url: "https://prometheus-prod-server-url-given-to-you.grafana.net/api/prom/push"
+    basic_auth:
+      username: ""
+      password: ""

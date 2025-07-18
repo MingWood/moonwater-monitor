@@ -1,0 +1,13 @@
+[Unit]
+Description=Prometheus Server
+Documentation=https://prometheus.io/docs/introduction/overview/
+After=network-online.target
+
+[Service]
+ExecStart=/home/pourover-pi/prometheus \
+  --config.file=/home/pourover-pi/prometheus.yml \
+  --storage.tsdb.path=/opt/prometheus/data \
+  --storage.tsdb.retention.time=30d
+
+[Install]
+WantedBy=multi-user.target

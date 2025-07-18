@@ -1,0 +1,28 @@
+REFRESH_INTERVAL: 60
+
+SENSORS_ATTACHED:
+  - RO_outlet_slowbar
+  - mineral_boosted_slowbar
+  - mineral_boosted_mainspro
+
+SENSOR_ID_TO_INDEX:
+  RO_outlet_slowbar: 1
+  mineral_boosted_slowbar: 2
+  mineral_boosted_mainspro: 0
+
+SENSOR_COMPENSATIONS:
+  RO_outlet_slowbar:
+    slope: 0.338
+    offset: -2.04
+  mineral_boosted_slowbar:
+    slope: 0.338
+    offset: -2.04
+  mineral_boosted_mainspro:
+    slope: 0.338
+    offset: 0.3
+
+SERVO_ADJUSTMENTS:
+  USE_SERVO: false
+  SENSOR_ID_FOR_ANGLE_ADJUSTMENT: RO_outlet_slowbar
+  TDS_TARGET: 40
+  SERVO_ID_FOR_ANGLE_ADJUSTMENT: NA

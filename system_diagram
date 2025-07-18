@@ -1,0 +1,45 @@
+---
+config:
+  theme: redux-dark
+---
+flowchart TD
+    subgraph POmineralInjected
+        POChiller
+        POBoiler
+    end
+    subgraph EspressoMineralInjected
+        SynessoMVPHydra
+    end
+    subgraph RObase
+        SyrupStationChiller
+        SyrupStationBoiler
+        IceMachineHoshizaki
+        IceMachineEurodib
+    end
+    subgraph CityTap
+        SinkFaucets/Rinsers/etc
+        SteamOven
+        CustomerChiller
+    end
+    LineBoostPump&Accumulator
+    MechanicalDoser1
+    MechanicalDoser2
+    ROsystemMixingNeedleValveServoControlled
+    Accumulator
+    ConcentrateFormula1/Ghboost\
+    ConcentrateFormula2/Khboost\
+    GroundControl
+    InlineGhCatridge
+    Decent/ManualTankRefill\
+
+    CityTap --> LineBoostPump&Accumulator
+    LineBoostPump&Accumulator -- TDSsensor --> ROsystemMixingNeedleValveServoControlled
+        ROsystemMixingNeedleValveServoControlled -- TDSsensor --> Accumulator
+        Accumulator --> RObase
+    RObase -- TDSsensor --> MechanicalDoser1
+        ConcentrateFormula1/Ghboost\ --> MechanicalDoser1
+        MechanicalDoser1 -- TDSsensor --> POmineralInjected
+    ConcentrateFormula2/Khboost\ --> MechanicalDoser2
+        RObase -- TDSsensor --> MechanicalDoser2
+        MechanicalDoser2 -- TDSsensor --> EspressoMineralInjected
+    RObase --> InlineGhCatridge -->  GroundControl

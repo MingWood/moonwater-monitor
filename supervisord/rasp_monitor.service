@@ -1,0 +1,10 @@
+# rasp_monitor.service
+
+[Unit]
+Description=Measures pourover bar related metrics
+
+[Service]
+ExecStart=/home/pourover-pi/source/venvs/popi/bin/python /home/pourover-pi/source/pourover-pi-reporting/server.py ./configs/MW-hq-slowbar.yaml
+
+[Install]
+WantedBy=multi-user.target

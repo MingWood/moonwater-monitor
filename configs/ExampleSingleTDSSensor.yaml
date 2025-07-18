@@ -1,0 +1,18 @@
+REFRESH_INTERVAL: 60
+
+SENSORS_ATTACHED:
+  - example_sensor
+
+SENSOR_ID_TO_INDEX:
+  example_sensor: 0
+
+SENSOR_COMPENSATIONS:
+  example_sensor:
+    slope: 0.338
+    offset: -2.04
+
+SERVO_ADJUSTMENTS:
+  USE_SERVO: false
+  SENSOR_ID_FOR_ANGLE_ADJUSTMENT: example_sensor
+  TDS_TARGET: 40
+  SERVO_ID_FOR_ANGLE_ADJUSTMENT: NA
