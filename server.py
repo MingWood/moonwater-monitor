@@ -25,8 +25,27 @@ class WebServer(object):
         })  
         self.app.route('/test', methods=['GET'])(self.test_server)
         self.refresh_interval = self.config['REFRESH_INTERVAL']
+        self.connectors = {}
+        self.init_connectors()
         self.setup_prometheus()
         self.start_background_monitor()
+
+    def init_connectors(self):
+        self.connectors['tds_meter'] = tds_meter.TDSMeter(
+                self.config['SENSORS_ATTACHED'],
+                self.config['SENSOR_ID_TO_INDEX'],
+                self.config['SENSOR_COMPENSATIONS']
+        )
+
+        flow_meter_details = self.config.get('FLOW_METER_ATTACHED_PIN')
+        if flow_meter_details:
+            meter_pin = list(flow_meter_details.values())[0]
+            self.connectors['flow_meter'] = flow_meter.FlowMeter(meter_pin)
+
+        if self.config['SERVO_ADJUSTMENTS']['USE_SERVO']:
+            self.connectors['tap_mixing_servo'] = tap_mixing_servo.TapMixingServo(
+                initial_angle=int(self.config['SERVO_ADJUSTMENTS']['INITIAL_ANGLE'])
+            )
 
     def setup_prometheus(self):
         self.tds_sensor = Gauge(
@@ -61,11 +80,7 @@ class WebServer(object):
             time.sleep(self.refresh_interval)
 
     def check_tds_levels(self):
-        meter = tds_meter.TDSMeter(
-            self.config['SENSORS_ATTACHED'],
-            self.config['SENSOR_ID_TO_INDEX'],
-            self.config['SENSOR_COMPENSATIONS']
-        )
+        meter = self.connectors['tds_meter']
         current_vals = meter.read_tds_values()
         buffer = meter.get_buffered_tds_values()
         return current_vals, buffer
@@ -75,8 +90,7 @@ class WebServer(object):
         if not meter_details:
             return {}, []
         meter_name = list(meter_details.keys())[0]
-        meter_pin = list(meter_details.values())[0]
-        meter = flow_meter.FlowMeter(meter_pin)
+        meter = self.connectors['flow_meter']
         return { meter_name: meter.get_last_flow_rate() },  meter.get_buffered_flow_rates()
 
     def execute_angle_corrections(self, tds_values, flow_buffer):
@@ -87,7 +101,7 @@ class WebServer(object):
         for reading in tds_values:
             value = reading[self.config['SERVO_ADJUSTMENTS']['SENSOR_ID_FOR_ANGLE_ADJUSTMENT']]
             tds_buffer.append(value)
-        serv = tap_mixing_servo.TapMixingServo(initial_angle=200)
+        serv = self.connectors['tap_mixing_servo']
         angle = servo_angle_adjustments_from_tds.proportial_only_servo_angle_from_tds(
             tds_buffer,
             flow_buffer,

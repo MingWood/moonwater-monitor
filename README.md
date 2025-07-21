@@ -1,4 +1,5 @@
-# pourover-pi-reporting
+# Moonwater Monitor
+This repo contains some proof of concept code to monitor water quality related sensors, adjust servo positions, and report data to Grafana for collecting and visualizing water health for a coffee shop. We use this
 
 ### Materials Used
 
@@ -10,6 +11,8 @@
 ________________________________________________
 ### Hardware Setup
 - As a prerequisite you will need to have the Raspberry Pi running with a python environment installed and ready to use
+    - https://www.raspberrypi.com/documentation/computers/getting-started.html
+    - If you are new to all this, look up some guides on running Python programs on Raspberry Pi and command line shell usage before continuing
 - Refer to individual docs for the above hardware on how to properly connect them to a Pi GPIO pins
     for TDS readings specifically see `http://www.cqrobot.wiki/index.php/ADS1115_16-Bit_ADC_Module_SKU:_CQRADS1115`
     and `http://www.cqrobot.wiki/index.php/TDS_(Total_Dissolved_Solids)_Meter_Sensor_SKU:_CQRSENTDS01`
@@ -39,13 +42,15 @@ ________________________________________________
 - hosted version of grafana online which can create nice UI visualizations from the prometheus data
 
 ________________________________________________
-### Code Setup
-1. Create a python environment on your Raspberry Pi (https://learn.adafruit.com/python-virtual-environment-usage-on-raspberry-pi/basic-venv-usage)
+### Getting Started Guide
+0. Clone or copy this code into a directory on your Raspberry Pi
+
+1. Create a python environment (https://learn.adafruit.com/python-virtual-environment-usage-on-raspberry-pi/basic-venv-usage)
 
 2. Activate environment and install dependencies `pip install -r requirements.txt`
 
 3. Execute individual connector python modules to make sure your sensors are working correctly.
-    - Run `python tds_meter.py` to read live TDS values for example.
+    - Run `python tds_meter.py` to read live TDS values for example. If hooked up properly you should see readings here.
 
 4. Run the flask server to capture sensor readings from GPIO for export
     - `python server.py ./configs/ExampleSingleTDSSensor.yaml` 
