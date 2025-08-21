@@ -1,5 +1,5 @@
 # Moonwater Monitor
-This repo contains some proof of concept code to monitor water quality related sensors, adjust servo positions, and report data to Grafana for collecting and visualizing water health for a coffee shop. We use this
+This repo contains some proof of concept code to monitor water quality related sensors, adjust servo positions, and report data to Grafana for collecting and visualizing water health for a coffee shop. We use this at Moonwake Coffee Roasters Cafe. Some more background: https://substack.com/@moonwakecoffeeroasters/p-164388810
 
 ### Materials Used
 
